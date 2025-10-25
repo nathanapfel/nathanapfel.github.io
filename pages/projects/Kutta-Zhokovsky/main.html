@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Projects: GPE</title>
+        <script>
+            window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                tags: 'ams'  // auto-number equations like (1), (2), ...
+            },
+            options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+            };
+        </script>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="icon" href="/favicon.png">
+        <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+        <nav>
+            <table style="padding:5px;">
+                <tr>
+                    <td><a href="/index.html">Home</a></td>
+                    <td><a href="/pages/projects/contents.html">Projects</a></td>
+                    <td><a href="/pages/blog.html">Notes</a></td>
+                    <td><a href="/pages/gallery.html">Gallery</a></td>
+                </tr>
+            </table>
+        </nav>
+        <header>
+            <a href="/pages/projects/contents.html" style="color:white;"><h1>Projects</h1></a>
+        </header>
+        <section>
+            <article>
+                <br>
+                <h2>Conformal transformations and the Kutta-Zhukovsky airfoil</h2>
+                <br>
+                <p style="text-indent:0;">
+                    If you wait a bit, a desmos graph demonstrating the Kutta-Zhukovsky airfoil will load. The dotted lines are
+                    streamlines, and the darkness of the blue indicates the pressure. As you can see, higher pressure below the wing 
+                    and lower pressure above it lead to lift. I have imposed the Kutta condition, which requires that the air leaving
+                    the back of the airfoil do so smoothly. You can play with parameters, though I would recommend turning off the 
+                    pressure before you do so to increase loading times (that can be found under "Bernoulli's principle").
+                </p>
+                <br>
+                <p>
+                    Eventually, I plan on adding more detail here about how all of this is derived from the complex potential and
+                    conformal transformations.
+                </p>
+                <br>
+                <iframe
+                    src="https://www.desmos.com/calculator/mcspfdehzj"
+                    title="QMC cheat sheet"
+                    style="width:100%; aspect-ratio:11/8.5;"
+                ></iframe>
+            </article>
+        </section>
+        <footer>
+            <table style="padding:5px;">
+                <tr>
+                    <td><a href="/index.html">Home</a></td>
+                    <td><a href="mailto:nathan.apfel@yale.edu">Contact</a></td>
+                </tr>
+            </table>
+        </footer>
+    </body>
+</html>
