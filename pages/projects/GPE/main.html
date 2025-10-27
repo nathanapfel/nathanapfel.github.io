@@ -38,7 +38,6 @@
         </div>
         <section>
             <article>
-                <p style="color:red;">WORK IN PROGRESS</p><br>
                 <p style="text-indent:0;">
                     It is notoriously difficult to describe the behavior of many interacting particles with quantum mechanics, 
                     since the number of possible system configurations grows exponentially with the number of particles. Often, 
@@ -50,11 +49,11 @@
                     of these boxes: the Gross-Pitaevskii model.
                 </p>
                 <br>
-                <h3>I. The Gross-Pitaevskii model.</h3>
+                <h2>I. The Gross-Pitaevskii model.</h2>
                 <br>
                 <p>
                     Our goal is to describe a dilute gas of interacting bosons. In the language of second-quantization with 
-                    2-body interactions, we can describe the system with a Schr&ouml;dinger field $\Psi(\mathbf r, t)$:
+                    2-body interactions, we can represent the system with a Schr&ouml;dinger field $\Psi(\mathbf r, t)$:
                     \begin{equation}
                         H = \int d^3r\left(\Psi^\dagger(\mathbf r, t)\left(-\frac{\hbar^2\nabla^2}{2M}+V(\mathbf r)\right)\Psi(\mathbf r, t) + \frac{1}{2}\int d^3r'\Psi^\dagger(\mathbf r', t)\Psi^\dagger(\mathbf r, t)U(\mathbf r-\mathbf r')\Psi(\mathbf r', t)\Psi(\mathbf r, t)\right),
                     \end{equation}
@@ -65,6 +64,7 @@
                     can therefore pull the $\Psi$ terms out from under the $\mathbf r'$ integral:
                     \begin{equation}
                         H = \int d^3r\left(\Psi^\dagger(\mathbf r, t)\left(-\frac{\hbar^2\nabla^2}{2M}+V(\mathbf r)\right)\Psi(\mathbf r, t) +\frac{g}{2}\Psi^\dagger(\mathbf r, t)\Psi^\dagger(\mathbf r, t)\Psi(\mathbf r, t)\Psi(\mathbf r, t)\right)
+                        \label{Hamiltonian}
                     \end{equation}
                     Where $g = \int d^3r'U(r')$. The field-momentum conjugate to $\Psi(\mathbf r, t)$ is $i\Psi^\dagger(\mathbf r, t)$, 
                     so we can write the Heisenberg equation of motion for $\Psi$:
@@ -74,11 +74,12 @@
                     \end{equation}
                 </p><p>    
                     This is the Gross-Pitaevskii (GP) equation. As presented here, the GP equation is an operator equation for $\Psi$. 
-                    In many cases, though, we would like (for simulation purposes) to treat $\Psi$ as if it were a c-number. 
+                    However, we would like (for simulation purposes) to treat $\Psi$ as if it were a c-number. 
                     Technically, this means we assume most of the the particles are in the same state $\ket{\psi}$. Then we can take the expectation value 
                     $\psi(\mathbf r,t) = \bra{\psi}\Psi(\mathbf r,t)\ket{\psi}$ to get:
                     \begin{equation}
                         i\hbar \frac{d\psi}{dt} = \left(-\frac{\hbar^2\nabla^2}{2M}+V+gn|\psi|^2\right)\psi,
+                        \label{classical GPE}
                     \end{equation}
                     Where operator product in the last term simplifies because the matrix elements $\bra{\phi}\Psi\ket{\psi}$ 
                     (for $\ket{\phi}$ some other state) are negligible. This equation admits an intuitive physical 
@@ -94,7 +95,7 @@
                     to call it the Gross-Pitaevskii equation is simply a result of my background in atomic physics.
                 </p>
                 <br>
-                <h3>II. Simulation</h3>
+                <h2>II. Simulation</h2>
                 <br>
                 <p>The simulation can be found in <a 
                         href="https://github.com/nathanapfel/GPE-simulator/blob/main/Gross-Pitaevskii%20simulator.ipynb"
@@ -114,7 +115,136 @@
                 </p>
                 <img src="/images/projects/GPE/vortex shedding.gif" style="width:100%">
                 <br>
-                <h3>III. Interesting results</h3>
+                <h2>III. Interesting results</h2>
+                <br>
+                <h3>A. Collective excitations.</h3>
+                <br>
+                <p>
+                    In many cases, the first thing a physicist wants to know about a system is what happens if you excite it. 
+                    Generally, this means linearizing the theory around an equilibrium. In the GP model, linearized excitations 
+                    obey the Bogoliubov dispersion relation, derived using <a 
+                        href="https://web.archive.org/web/20200727153421/http://jetp.ac.ru/files/Bogolubov_007_01_0051.pdf"
+                        style="color:rgb(18, 105, 182);"
+                        target="_blank"
+                        >
+                            a method developed by Nikolay Bogoliubov to investigate the BCS theory of superconductivity.
+                    </a> 
+                    There are two ways to get this relation. One yields insights into the microscopic meaning of the excitation, 
+                    and one follows more directly from the scalar equation (\ref{classical GPE}). We will begin with the second. 
+                    Throughout, we will assume $V(\mathbf r)=0$, and that the equilibrium wave function is spatially homogeneous. 
+                    Relaxing these assumptions leads to interesting results (such as vortex excitations), which I might add later.
+                </p>
+                <p>
+                    Let us write $\psi(\mathbf r, t)=e^{-i\mu t/\hbar}(\psi_0+\delta \psi(\mathbf r,t))$, where $\psi_0$ is a real-valued 
+                    time-independent, homogeneous condensate wave function obeying $\mu\psi_0 = g\psi_0^3$ and $\delta \psi \ll \psi_0$. 
+                    Then, to first order in $\delta \psi$, Eq. (\ref{classical GPE}) becomes:
+                    \begin{equation}
+                        i\frac{d}{dt}\delta \psi(\mathbf r, t) = \left(-\frac{\hbar^2\nabla^2}{2M}+2g\psi_0^2-\mu\right)\delta \psi(\mathbf r,t) + g\psi_0^2~\delta \psi^*(\mathbf r,t).
+                    \end{equation}
+                </p>
+                <p>
+                    Assuming that $\delta \psi$ can be written as a sum of plane waves,
+                    \begin{equation}
+                        \delta \psi(\mathbf r, t) = \sum_{\mathbf k} \left(u_{\mathbf k}e^{i(\mathbf k \cdot \mathbf r-\omega_{\mathbf k }t)}+v^*_{\mathbf k}e^{-i(\mathbf k\cdot \mathbf r-\omega_{\mathbf k }t)}\right),
+                    \end{equation}
+                    we get the following coupled equations (suppressing indices):
+                    \begin{eqnarray}
+                        \hbar \omega_{\mathbf k} ~u &=& \left(\frac{\hbar^2k^2}{2M}+g\psi_0^2\right)u + g\psi_0^2v\\
+                        -\hbar \omega_{\mathbf k}  ~v &=& \left(\frac{\hbar^2k^2}{2M}+g\psi_0^2\right)v + g\psi_0^2u,
+                    \end{eqnarray}
+                    where we have used $\mu\psi_0=g\psi_0^3$ to eliminate $\mu$. These can be solved algebraically, giving the eigenvalue:
+                    \begin{equation}
+                        E_\mathbf k\equiv \hbar \omega_{\mathbf k}  = \sqrt{\frac{\hbar^2k^2}{2M}\left(\frac{\hbar^2k^2}{2M}+2g\psi_0^2\right)}
+                        \label{B}
+                    \end{equation}
+                    This is the Bogoliubov spectrum. Each plane wave solution then takes the form:
+                    \begin{equation}
+                        \delta \psi(\mathbf r, t) = ue^{i(\mathbf k\cdot \mathbf r-\omega t)}+v^*e^{-i(\mathbf k\cdot \mathbf r-\omega t)} = (u+v^*)\cos(\mathbf k\cdot \mathbf r-\omega t) + i(u-v^*)\sin(\mathbf k\cdot \mathbf r-\omega t)
+                    \end{equation}
+                    The real part is clearly a density perturbation, and the imaginary part perturbs the velocity potential. 
+                    This provides a nice classical interpretation for Bogoliubov excitations: they are alternating velocity and 
+                    density waves traveling through the fluid. 
+                </p>
+                <img src="/images/projects/GPE/Bogoliubov spectrum.png" alt='Bogoliubov spectrum' style="float:right;">
+                <p>
+                    The shape of the Bogoliubov spectrum (shown on the right) carries deep physical insights, and we will come back to it 
+                    frequently. For one, the small-$k$ limit of the dispersion is linear, which allows us to interpret long-wavelength 
+                    Bogoliubov excitations as soundwaves (or, in the quantum case, phonons). At larger $k$, the dispersion curves upwards
+                    and becomes quadratic. For all $k>0$, the dispersion relation lays above the linear sonic dispersion. It's not difficult 
+                    to show (through conservation of energy and momentum) that this means objects traveling below a certain 'critical velocity' 
+                    cannot create excitations in the condensate, so their motion will not be dissipated by the fluid. This is one of Landau's 
+                    criteria for superfluidity.
+                </p>
+                <br>
+                <p>
+                    We will also consider the quantum derivation of this spectrum, as it provides a different physical interpretation. Our starting 
+                    point will be the Hamiltonian Eq. (\ref{Hamiltonian}). We are interested in the energy difference between the ground state and an excited 
+                    state, so let us define:
+                    \begin{equation}
+                        \Delta H = H-H_0 = H-\mu\int d^3\mathbf r \Psi^\dagger \Psi
+                    \end{equation}
+                    Where $\mu$ is the chemical potential (at $T=0$, this is the Grand/Landau potential). We can then write the field operator 
+                    $\Psi$ in terms of plane waves:
+                    \begin{equation}
+                        \Psi = \left(\psi_0+\sum_{\mathbf k\neq 0}a_{\mathbf k}e^{i(\mathbf k\cdot \mathbf r-\omega_\mathbf k t)}\right)e^{-i\mu t/\hbar}.
+                    \end{equation}
+                    Here we have separated out the ground state expectation value $e^{-i\mu t}\psi_0 = \bra{\Omega}\Psi\ket{\Omega}$ and 
+                    converted it to a $c-$number. That is, the expectation 
+                    $\bra{\Omega}\sum_{\mathbf k\neq 0}a_{\mathbf k}e^{i(\mathbf k\cdot \mathbf r-\omega_\mathbf k t)}\ket{\Omega} = 0$. 
+                    We will assume that the ground state occupation is much greater than any other state's occupation, so we can neglect terms of 
+                    order $a_\mathbf k^3$ or higher. The Hamiltonian then becomes (letting $\psi_0$ be homogeneous and real valued):
+                    \begin{equation}
+                        \Delta H = \sum_{\mathbf k> 0}\left(\left(\frac{\hbar^2\mathbf k^2}{2M}+2g\psi_0^2-\mu\right)\left(a^\dagger_{\mathbf k}a_{\mathbf k}+a^\dagger_{-\mathbf k}a_{-\mathbf k}\right) + g\psi_0^2\left(a_{-\mathbf k}a_{\mathbf k}+a^\dagger_{-\mathbf k}a^\dagger_{\mathbf k}\right)\right).
+                    \end{equation}
+                </p>
+                <p>
+                    This Hamiltonian is quadratic, so we can diagonalize it by means of a Bogoliubov transformation. Let
+                    \begin{equation}
+                        b_\mathbf k = u_\mathbf ka_\mathbf k +v_\mathbf k^*a^\dagger_{-\mathbf k}.
+                    \end{equation}
+                    To preserve the interpretation of $b$ as an annihilation operator, we can impose
+                    \begin{equation}
+                        u_\mathbf ku^*_\mathbf {k'}-v_\mathbf k^*v_{\mathbf k'} = 1,\quad\text{so that}\quad [b_\mathbf k,b_{\mathbf k'}^\dagger] = \delta_{\mathbf k, \mathbf k'}.
+                    \end{equation}
+                    With some work, we find that $\mu = g\psi_0^2$ and that $u$ and $v$ are the same as above, so:
+                    \begin{equation}
+                        \Delta H = \sum_{\mathbf k>0}\sqrt{\frac{\hbar^2k^2}{2M}\left(\frac{\hbar^2k^2}{2M}+2g\psi_0^2\right)}~\left(b^\dagger_\mathbf{k}b_{\mathbf{k}} + b^\dagger_{-\mathbf k} b_{-\mathbf k}\right) = \sum_{\mathbf k\neq 0}E_\mathbf kb^\dagger_{\mathbf k}b_{\mathbf k}
+                    \end{equation}
+                    We arrive at the same result, but the physical picture is different. Our Hamiltonian now looks very similar to one without 
+                    interactions, with two exceptions: (1) it has a modified spectrum, and (2) the creation and annihilation operators are 
+                    replaced with new operators $b^\dagger_{\mathbf k}$ and $b_\mathbf k$, whose effect is to add particles with wave number 
+                    $\mathbf k$ and remove particles with $-\mathbf k$ and vice versa. Another way to think of this is that $b^\dagger$ coherently 
+                    creates a particle and a hole traveling in opposite directions. 
+                </p>
+                <p>
+                    The following two animations illustrate the spectrum. 
+                </p>   
+                <img src="/images/projects/GPE/bogoliubov_resonant-ezgif.com-crop.gif" alt="Each box driven at the same frequency">
+                <img src="/images/projects/GPE/bogoliubov-ezgif.com-crop.gif" alt="Each box driven at resonance">
+                <p>
+                In the first, each box is driven at the same frequency but different wave numbers. It is clear that resonance is achieved 
+                somewhere between the fourth and fifth boxes, counted from the bottom. According to Eq. (\ref{B}), it should be the fifth. 
+                In the second, each box is driven near resonance. The exact resonant frequency should differ from the Eq. (\ref{B}) since
+                the ground state wave function is not homogeneous, but it is clearly a good approximation.
+                </p>
+                <br>
+                <h3>B. Shockwaves.</h3>
+                <br>
+                <p>
+                    Work in progress
+                </p>
+                <br>
+                <h3>C. Kelvin-Helmholtz instability.</h3>
+                <br>
+                <p>
+                    Work in progress
+                </p>
+                <br>
+                <h3>D. Karman vortices.</h3>
+                <br>
+                <p>
+                    Work in progress
+                </p>
             </article>
         </section>
         <footer>
