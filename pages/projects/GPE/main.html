@@ -69,19 +69,20 @@
                     Where $g = \int d^3r'U(r')$. The field-momentum conjugate to $\Psi(\mathbf r, t)$ is $i\Psi^\dagger(\mathbf r, t)$, 
                     so we can write the Heisenberg equation of motion for $\Psi$:
                     \begin{equation}
-                        i\hbar \frac{d\Psi(\mathbf r, t)}{dt} = [\Psi(\mathbf r, t),H] = \left(-\frac{\hbar^2\nabla^2}{2M}+V(\mathbf r)++ g\Psi^\dagger (\mathbf r, t)\Psi(\mathbf r, t)\right)\Psi(\mathbf r, t).
+                        i\hbar \frac{d\Psi(\mathbf r, t)}{dt} = [\Psi(\mathbf r, t),H] = \left(-\frac{\hbar^2\nabla^2}{2M}+V(\mathbf r)+ g\Psi^\dagger (\mathbf r, t)\Psi(\mathbf r, t)\right)\Psi(\mathbf r, t).
                         \label{GPE}
                     \end{equation}
                 </p><p>    
-                    This is the Gross-Pitaevskii (GP) equation. If the gas is a Bose-Einstein condensate, then every atom is 
-                    in the ground state $\ket{\Omega}$ with chemical potential $\mu$, so the only non-zero matrix element for $\Psi$ is 
-                    $e^{-i\mu t/\hbar}\psi_0(\mathbf r, t)=\bra{\Omega}\Psi(\mathbf r, t)\ket{\Omega}$. This simplifies Eq. (\ref{GPE}) 
-                    to:
+                    This is the Gross-Pitaevskii (GP) equation. As presented here, the GP equation is an operator equation for $\Psi$. 
+                    In many cases, though, we would like (for simulation purposes) to treat $\Psi$ as if it were a c-number. 
+                    Technically, this means we assume most of the the particles are in the same state $\ket{\psi}$. Then we can take the expectation value 
+                    $\psi(\mathbf r,t) = \bra{\psi}\Psi(\mathbf r,t)\ket{\psi}$ to get:
                     \begin{equation}
-                        \mu \psi_0(\mathbf r) = \left(-\frac{\hbar^2\nabla^2}{2M}+V(\mathbf r)+g|\psi_0(\mathbf r)|^2\right)\psi_0(\mathbf r),
+                        i\hbar \frac{d\psi}{dt} = \left(-\frac{\hbar^2\nabla^2}{2M}+V+gn|\psi|^2\right)\psi,
                     \end{equation}
-                    which is the form often given for the GP equation (for example, on Wikipedia). This equation admits an intuitive physical 
-                    interpretation: when all the atoms are in the same state, they share a single 'condensate wave function'. It follows the 
+                    Where operator product in the last term simplifies because the matrix elements $\bra{\phi}\Psi\ket{\psi}$ 
+                    (for $\ket{\phi}$ some other state) are negligible. This equation admits an intuitive physical 
+                    interpretation: when all the atoms are in the same state, they share a single 'condensate wave function' which follows the 
                     normal Schr&ouml;dinger equation with the addition of a repulsive potential proportional to the condensate density at each point.
                 </p><br><p>
                     There are many other ways to derive the GP equation (see Svistunov, Babaev, and Prokof'ev; Pethick and Smith; 
@@ -93,9 +94,19 @@
                     to call it the Gross-Pitaevskii equation is simply a result of my background in atomic physics.
                 </p>
                 <br>
-                <h3>II. Simulation design</h3>
+                <h3>II. Simulation</h3>
                 <br>
+                <p>The simulation can be found in <a 
+                        href="https://github.com/nathanapfel/GPE-simulator/blob/main/Gross-Pitaevskii%20simulator.ipynb"
+                        style="color:rgb(18, 105, 182);"
+                        target="_blank"
+                    >this Jupyter notebook</a>. It's pretty simple, but we can get a lot out of it.</p>
                 <br>
+                <iframe 
+                    src="https://github.com/nathanapfel/GPE-simulator/blob/main/Gross-Pitaevskii%20simulator.ipynb"
+                    title="GPE simulator"
+                    style="width:100%; aspect-ratio:16/9;"
+                ></iframe>
                 <h3>III. Interesting results</h3>
             </article>
         </section>
