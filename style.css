@@ -36,7 +36,6 @@ p {
 }
 blockquote {
     width: 60%;
-    place-items:center;
     text-align:justify;
 }
 a:link {
