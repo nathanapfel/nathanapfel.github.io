@@ -32,6 +32,12 @@ p {
     color:black;
     font-size:12.5pt;
     text-indent:15pt;
+    text-align: justify;
+}
+blockquote {
+    width: 60%;
+    place-items:center;
+    text-align:justify;
 }
 a:link {
     color:black;
