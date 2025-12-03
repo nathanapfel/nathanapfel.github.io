@@ -165,11 +165,12 @@
                     This provides a nice classical interpretation for Bogoliubov excitations: they are alternating velocity and 
                     density waves traveling through the fluid. 
                 </p>
+                <br>
                 <img src="/images/projects/GPE/Bogoliubov spectrum.png" alt='Bogoliubov spectrum' style="float:right;">
                 <p>
                     The shape of the Bogoliubov spectrum (shown on the right) carries deep physical insights, and we will come back to it 
-                    frequently. For one, the small-$k$ limit of the dispersion is linear, which allows us to interpret long-wavelength 
-                    Bogoliubov excitations as soundwaves (or, in the quantum case, phonons). At larger $k$, the dispersion curves upwards
+                    frequently. For one, the small-$k$ limit of the dispersion is linear (the dashed line in the plot). We can interpret these long-wavelength 
+                    Bogoliubov excitations as soundwaves (or, in the quantum case, phonons), traveling with a speed $c = \sqrt{g\psi_0^2/M}$. At larger $k$, the dispersion curves upwards
                     and becomes quadratic. For all $k>0$, the dispersion relation lays above the linear sonic dispersion. It's not difficult 
                     to show (through conservation of energy and momentum) that this means objects traveling below a certain 'critical velocity' 
                     cannot create excitations in the condensate, so their motion will not be dissipated by the fluid. This is one of Landau's 
@@ -218,9 +219,11 @@
                 </p>
                 <p>
                     The following two animations illustrate the spectrum. 
-                </p>   
+                </p> 
+                <center>
                 <img src="/images/projects/GPE/bogoliubov1.gif" alt="Each box driven at the same frequency" style="width:45%">
                 <img src="/images/projects/GPE/bogoliubov2.gif" alt="Each box driven at resonance" style="width:45%">
+                </center>  
                 <p>
                 In the first, each box is driven at the same frequency but different wave numbers. It is clear that resonance is achieved 
                 somewhere around the third box counted from the bottom. According to Eq. (\ref{B}), it should be the third exactly. 
@@ -229,17 +232,82 @@
                 the background density has been exaggerated for visibility.
                 </p>
                 <br>
+                <br>
+                <br>
+                <br>
+                    
                 <h3>B. Kelvin-Helmholtz instability.</h3>
                 <br>
                 <p>
-                    Work in progress
+                    Kelvin-Helmholtz instability occurs when there's a velocity shear. When this shear is concentrated 
+                    along a single surface in the fluid, we call it a vortex sheet. It turns out that these vortex sheets are
+                    in general unstable, a phenomenon known as Kelvin-Helmholtz (KH) instability.
                 </p>
                 <br>
-                <h3>C. Shockwaves.</h3>
+                <img src="/images/projects/GPE/KH diagram.png", style="width:50%; float:left;">
+                <p>
+                    There are a few ways of describing why this happens in regular fluids; let's use the complex potential and Bernoulli's principle, 
+                    as I think that's the most intuitive. First, a bit of background (see, e.g., D. Rutherfords <i>Fluid Dynamics</i> for a more detailed
+                    introduction). There are a few ways of talking about the velocity of a fluid in two dimensions. First, wherever the velocity is irrotational (has zero curl), we can define
+                    a velocity potential $\phi(x,y)$ such that $\mathbf v = \nabla \phi$. In an incompressible fluid, the velocity potential must
+                    obey $\nabla^2\phi = 0$. The GPE clearly does <i>not</i> describe an incompressible fluid, but let's assume
+                    incompressibility (and set the density $\rho=1$) to get some intuition about KH instability. Alternatively, we can talk about the stream function $\psi$,
+                    defined as $v_y = -\partial_x \psi$, $v_x = \partial_y \psi$. This is well-defined even when the velocity has a curl, and has 
+                    some nice properties. First, $\psi(x,y)$ gives the amount of fluid flowing through any contour drawn between some reference point and $(x,y)$.
+                    Second, the contours $\psi(x,y) = c$ define 'streamlines' of the fluid, or lines tangent to the velocity at each point. Like electric and 
+                    magnetic field lines, the closer together the contours are, the faster the fluid flows. 
+                </p><br><p>
+                    The complex potential is defined to be $\omega(x+iy) = \phi(x,y) + i\psi(x,y)$. In incompressible fluids, one can show that this 
+                    is an analytic function of $z=x+iy$, and that <i>any analytic function can be a complex potential</i>. This means we don't have to worry 
+                    about using PDE methods to solve $\nabla^2 \omega = 0$, we can get the velocity potential and associated streamfunction for free if we
+                    can find an analytic function that obeys our boundary conditions. We can easily recover the velocity from $\omega$:
+                    \begin{equation}
+                        v_x -iv_y = \partial_z \omega(z)
+                    \end{equation}
+                </p><br><p>
+                    For instance, take fluid flowing through a pipe such that 
+                    the velocity above $y=0$ is $\mathbf v = (U,0)$ and below is $\mathbf v=(-U,0)$. Clearly, at $y=0$, the curl of the fluid is 
+                    no longer zero (in fact it diverges), so the complex potential is not defined there. For $y>0$, we get $\omega(z) = Uz$, and below $\omega(z) = -Uz$.
+                </p><br><p>
+                    Then suppose we perturb this slightly, say by setting
+                    \begin{equation}
+                        \omega(z) = \begin{cases} 
+                                        Uz + ae^{ikz} & y\gtrsim -a\sin(kx)\\
+                                        -Uz + ae^{-ikz} & y \lesssim -a\sin(kx)
+                                    \end{cases}
+                    \end{equation}
+                    Note this is only valid for small $a$. This leads to the streamlines drawn in the figure on the left. By Bernoulli's principle,
+                    we can now calculate the pressure:
+                    \begin{equation}
+                        p(x,y) = p_0-\frac{1}{2}|\mathbf v(x,y)|^2 = p_0 - \frac{1}{2}|\partial_z \omega(z)|^2\big|_{z=x+iy}
+                    \end{equation}
+                    Above the vortex sheet, we have:
+                    \begin{equation}
+                        p(x,y) = p_0-\frac{1}{2}|U+ik~ae^{ik(x+iy)}|^2 = p_0-\frac{1}{2}\left(U^2+k^2a^2e^{-2ky}\right)+Uka\sin(kx)e^{-ky}
+                    \end{equation}
+                    The pressure is illustrated in the figure by the intensity of the shading. That is, there is higher pressure above the troughs
+                    of the perturbation and lower pressure above the peaks. Similarly, under the vortex sheet, there is higher pressure below
+                    the peaks and lower above the troughs. This deforms the vortex sheet further, as shown at the bottom of the figure. This is KH instability.
+                </p><br><p>
+                    In the GP Equation, vorticity is quantized. This means that instead of a single continuous vortex sheet, we get a series of point 
+                    vortices, as shown below. Just like in the incompressible case, a small perturbation from equilibrium grows, and the vortices pull
+                    together into clumps:
+                </p>
+                <center><img src="/images/projects/GPE/kelvin-helmholtz.gif" 
+                    alt="Kelvin-Helmholtz like instability of a GP vortex sheet" 
+                    style="width:80%"></center>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h3 style="clear:both;">C. Shockwaves.</h3>
                 <br>
                 <p>
                     Work in progress
                 </p>
+                <br>
+                <br>
+                <br>
                 <br>
                 <h3>D. Karman vortices.</h3>
                 <br>
